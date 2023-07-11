@@ -27,7 +27,11 @@ jobs:
             terraform version
       - terraform/init:
           backend_config: bucket=${S3_BACKEND_BUCKET},key=${S3_BACKEND_KEY},profile=CircleCI
+      - terraform/fmt
       - terraform/validate
+      - terraform/plan
+      - terraform/apply
+
 
 workflows:
   deployment-workflow:
