@@ -30,7 +30,11 @@ jobs:
       - terraform/fmt
       - terraform/validate
       - terraform/plan
-      - terraform/apply
+      - when:
+          condition:
+            equal: [ main, << pipeline.git.branch >> ]
+          steps:
+            - terraform/apply
 
 
 workflows:
