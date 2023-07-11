@@ -6,7 +6,9 @@ orbs:
 
 jobs:
   deployment:
-    executor: terraform/default
+    executor:
+      name: terraform/default
+      tag: 1.4.3
     steps:
       - checkout
       - aws-cli/setup:
@@ -25,9 +27,7 @@ jobs:
             terraform version
       - terraform/init:
           backend_config: bucket=${S3_BACKEND_BUCKET},key=${S3_BACKEND_KEY},profile=CircleCI
-          tag: 1.4.3
-      - terraform/validate:
-          tag: 1.4.3
+      - terraform/validate
 
 workflows:
   deployment-workflow:
