@@ -9,10 +9,6 @@ jobs:
     executor: terraform/default
     steps:
       - checkout
-      - run:
-          name: "Install AWS CLI"
-          command: |
-            apk add --no-cache aws-cli
       - aws-cli/setup:
           role_arn: ${AWS_ROLE_ARN}
           region: ${AWS_REGION}
