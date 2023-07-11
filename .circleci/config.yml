@@ -8,7 +8,7 @@ jobs:
   deployment:
     executor:
       name: terraform/default
-      tag: 1.4.3
+      tag: 1.4.6
     steps:
       - checkout
       - aws-cli/setup:
