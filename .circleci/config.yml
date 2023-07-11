@@ -2,13 +2,17 @@ version: 2.1
 
 orbs:
   aws-cli: circleci/aws-cli@4.0.0
+  terraform: circleci/terraform@3.2.1
 
 jobs:
-  say-hello:
-    docker:
-      - image: cimg/aws:2023.06
+  deployment:
+    executor: terraform/default
     steps:
       - checkout
+      - run:
+          name: "Install AWS CLI"
+          command: |
+            apk add --no-cache aws-cli
       - aws-cli/setup:
           role_arn: ${AWS_ROLE_ARN}
           region: ${AWS_REGION}
@@ -19,8 +23,12 @@ jobs:
           name: "Test AWS OIDC authentication"
           command: |
             aws sts get-caller-identity --profile "CircleCI"
+      - run:
+          name: "Test terraform version"
+          command: |
+            terraform version
 
 workflows:
-  say-hello-workflow:
+  deployment-workflow:
     jobs:
-      - say-hello
+      - deployment
