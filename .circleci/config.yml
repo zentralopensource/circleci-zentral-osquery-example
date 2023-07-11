@@ -10,11 +10,11 @@ jobs:
     steps:
       - checkout
       - aws-cli/setup:
-          role-arn: ${AWS_ROLE_ARN}
-          aws-region: ${AWS_REGION}
-          profile-name: "CircleCI"
-          role-session-name: "CircleCI project OIDC"
-          session-duration: 600
+          role_arn: ${AWS_ROLE_ARN}
+          region: ${AWS_REGION}
+          profile_name: "CircleCI"
+          role_session_name: "CircleCI project OIDC"
+          session_duration: 600
       - run:
           name: "Test AWS OIDC authentication"
           command: |
