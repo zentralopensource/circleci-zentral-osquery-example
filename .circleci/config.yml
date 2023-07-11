@@ -16,10 +16,6 @@ jobs:
           role_session_name: CircleCI_project_OIDC
           session_duration: "900"
       - run:
-          name: "Setup AWS_PROFILE environment variable"
-          command: |
-            echo 'export AWS_PROFILE="CircleCI"' >> "$BASH_ENV"
-      - run:
           name: "Test AWS OIDC authentication"
           command: |
             aws sts get-caller-identity --profile "CircleCI"
@@ -28,7 +24,7 @@ jobs:
           command: |
             terraform version
       - terraform/init:
-          backend_config: bucket=${S3_BACKEND_BUCKET},key=${S3_BACKEND_KEY}
+          backend_config: bucket=${S3_BACKEND_BUCKET},key=${S3_BACKEND_KEY},profile=CircleCI
       - terraform/validate
 
 workflows:
