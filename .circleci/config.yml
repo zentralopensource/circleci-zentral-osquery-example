@@ -14,7 +14,7 @@ jobs:
           region: ${AWS_REGION}
           profile_name: "CircleCI"
           role_session_name: "CircleCI project OIDC"
-          session_duration: 600
+          session_duration: "600"
       - run:
           name: "Test AWS OIDC authentication"
           command: |
