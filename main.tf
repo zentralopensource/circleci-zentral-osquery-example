@@ -4,6 +4,8 @@ terraform {
       source = "zentralopensource/zentral"
     }
   }
+  backend "s3" {
+  }
 }
 
 provider "zentral" {

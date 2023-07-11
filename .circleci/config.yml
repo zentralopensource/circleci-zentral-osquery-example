@@ -7,12 +7,14 @@ orbs:
 jobs:
   deployment:
     executor: terraform/default
+    environment:
+      AWS_PROFILE: "CircleCI"
     steps:
       - checkout
       - aws-cli/setup:
           role_arn: ${AWS_ROLE_ARN}
           region: ${AWS_REGION}
-          profile_name: "CircleCI"
+          profile_name: ${AWS_PROFILE}
           role_session_name: "CircleCI_project_OIDC"
           session_duration: "900"
       - run:
@@ -23,6 +25,9 @@ jobs:
           name: "Test terraform version"
           command: |
             terraform version
+      - terraform/init:
+          backend_config: bucket=${S3_BACKEND_BUCKET},key=${S3_BACKEND_KEY}
+      - terraform/validate
 
 workflows:
   deployment-workflow:
