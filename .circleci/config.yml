@@ -7,15 +7,13 @@ orbs:
 jobs:
   deployment:
     executor: terraform/default
-    environment:
-      AWS_PROFILE: "CircleCI"
     steps:
       - checkout
       - aws-cli/setup:
           role_arn: ${AWS_ROLE_ARN}
           region: ${AWS_REGION}
-          profile_name: ${AWS_PROFILE}
-          role_session_name: "CircleCI_project_OIDC"
+          profile_name: CircleCI
+          role_session_name: CircleCI_project_OIDC
           session_duration: "900"
       - run:
           name: "Test AWS OIDC authentication"
@@ -27,6 +25,8 @@ jobs:
             terraform version
       - terraform/init:
           backend_config: bucket=${S3_BACKEND_BUCKET},key=${S3_BACKEND_KEY}
+          environment:
+            AWS_PROFILE: CircleCI
       - terraform/validate
 
 workflows:
